@@ -1,0 +1,19 @@
+Problem Link: https://leetcode.com/problems/missing-number/
+
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+       int n = nums.size();  // Correct way to get the size of the vector
+        int xor1 = 0;
+        int xor2 = 0;
+        
+        // XOR all elements of nums and all indices from 0 to n
+        for(int i = 0; i < n; i++) {
+            xor2 ^= nums[i];  // XOR all elements of nums
+            xor1 ^= i;        // XOR all indices from 0 to n-1
+        }
+        xor1 ^= n;  // XOR the last index n
+        
+        return xor1 ^ xor2;  // The missing number is xor1 XOR xor2
+    }
+};
