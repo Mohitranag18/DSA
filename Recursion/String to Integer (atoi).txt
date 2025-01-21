@@ -1,0 +1,48 @@
+Problem Link: https://leetcode.com/problems/string-to-integer-atoi/
+
+class Solution {
+    private int index = 0;
+    private static final int INT_MAX = Integer.MAX_VALUE;
+    private static final int INT_MIN = Integer.MIN_VALUE;
+
+    public int myAtoi(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+
+        // Skip leading spaces
+        while (index < s.length() && s.charAt(index) == ' ') {
+            index++;
+        }
+
+        if (index == s.length()) {
+            return 0;
+        }
+
+        // Handle sign
+        int sign = 1;
+        if (s.charAt(index) == '-' || s.charAt(index) == '+') {
+            sign = (s.charAt(index) == '-') ? -1 : 1;
+            index++;
+        }
+
+        return sign * recursiveParse(s, 0, sign);
+    }
+
+    private int recursiveParse(String s, int result, int sign) {
+        if (index >= s.length() || !Character.isDigit(s.charAt(index))) {
+            return result;
+        }
+
+        int digit = s.charAt(index) - '0';
+
+        // Check overflow before updating the result
+        if (result > (INT_MAX - digit) / 10) {
+            return (sign == 1) ? INT_MAX : INT_MIN;
+        }
+
+        result = result * 10 + digit;
+        index++;
+        return recursiveParse(s, result, sign);
+    }
+}
