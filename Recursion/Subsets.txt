@@ -13,15 +13,13 @@ class Solution {
             result.add(new ArrayList<>(current));
             return;
         }
-
-        // Exclude the current element and move to the next
-        generateSubsets(nums, index + 1, current, result);
-
         // Include the current element and move to the next
         current.add(nums[index]);
         generateSubsets(nums, index + 1, current, result);
 
         // Backtrack to remove the last element for the next iteration
         current.remove(current.size() - 1);
+        // Exclude the current element and move to the next
+        generateSubsets(nums, index + 1, current, result);  
     }
 }
